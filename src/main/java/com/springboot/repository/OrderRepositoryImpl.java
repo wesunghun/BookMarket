@@ -1,0 +1,25 @@
+package com.springboot.repository;
+
+import java.util.Map;
+import java.util.HashMap;
+import org.springframework.stereotype.Repository;
+import com.springboot.domain.Order;
+
+@Repository
+public class OrderRepositoryImpl implements OrderRepository{
+	private Map<Long, Order> listOfOrders;
+	private long nextOrderId;
+	public OrderRepositoryImpl() {
+		listOfOrders = new HashMap<Long, Order>();
+		nextOrderId = 2000;
+	}
+	
+	public Long saveOrder(Order order) {
+		order.setOrderId(getNextOrderId());
+		return order.getOrderId();
+	}
+	
+	private synchronized long getNextOrderId() {
+		return nextOrderId++;
+	}
+}
